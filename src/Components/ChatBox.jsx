@@ -1,12 +1,18 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import { collection, query, onSnapshot, orderBy, limit } from "firebase/firestore";
 import { db } from '../firebase';
 
 const ChatBox = () => {
 
+    const messagesEndRef = useRef();
     const [messages , setMessages] = useState([]);
+
+    const scrollToBottom = () =>{
+        messagesEndRef.current.scrollIntoView({behavior: "smooth"})
+    }
+    useEffect(scrollToBottom , [messages])
 
     useEffect(() => {
         const q = query(
@@ -32,6 +38,7 @@ const ChatBox = () => {
             {
                 messages.map(message => <Message key={message.id} message={message}></Message>)
             }
+            <div className="" ref={messagesEndRef}></div>
         </div>
     );
 };

@@ -3,7 +3,8 @@ import { UserAuth } from "../Context/AuthContext";
 
 const PrivateRoutes = ({children}) => {
 
-    const {currentUser} = UserAuth();
+    const {currentUser } = UserAuth();
+
 
     if(!currentUser){
         return <Navigate to="/" replace={true}></Navigate>

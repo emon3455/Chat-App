@@ -5,13 +5,19 @@ const NavigationBar = () => {
     const {currentUser,  logOut} = UserAuth();
 
     const handleLogOut = ()=>{
-        logOut()
-        .then(res=>{
-            alert("log out done!!");
-        })
-        .catch(er=>{
-            console.log(er.message);
-        })
+        if(currentUser){
+            logOut()
+            .then(res=>{
+                alert("log out done!!");
+            })
+            .catch(er=>{
+                console.log(er.message);
+            })
+        }
+        else{
+            alert("please log in first");
+        }
+        
     } 
 
     return (

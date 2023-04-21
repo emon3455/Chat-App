@@ -1,9 +1,32 @@
+import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../Context/AuthContext';
+import { useEffect } from 'react';
 
 const Login = () => {
 
-    const {currentUser} = UserAuth();
+    const navigate = useNavigate();
+
+    const {currentUser , loginWithGoogle} = UserAuth();
     console.log(currentUser);
+
+    const handleGoogleLogin =()=>{
+        loginWithGoogle()
+        .then(res=>{
+            const logedUser = res.user;
+        })
+        .catch(er=>{
+            console.log(er.message);
+        })
+
+    }
+
+    useEffect(()=>{
+
+        if(currentUser){
+            navigate("/chat");
+        }
+
+    },[currentUser])
 
     return (
         <div>
@@ -14,7 +37,7 @@ const Login = () => {
                         <p className="py-6">
                             Join the conversation meet new people and make connections in one shared room.
                         </p>
-                        <button className="btn">Login with Google</button>
+                        <button onClick={handleGoogleLogin} className="btn">Login with Google</button>
                     </div>
                 </div>
             </div>

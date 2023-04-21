@@ -1,6 +1,10 @@
-import React from 'react';
+import { UserAuth } from '../Context/AuthContext';
 
 const Login = () => {
+
+    const {currentUser} = UserAuth();
+    console.log(currentUser);
+
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">

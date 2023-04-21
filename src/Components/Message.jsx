@@ -1,18 +1,23 @@
+import { UserAuth } from "../Context/AuthContext";
 
 const Message = ({ message }) => {
+
+    const {currentUser} = UserAuth();
     
+    const {avatar , name , text } = message;
+
     return (
         <div>
-            <div className="chat chat-start">
+            <div className={`chat ${message.uid === currentUser.uid ? "chat-end" : "chat-start"} `}>
                 <div className="chat-image avatar">
                     <div className="w-10 rounded-full">
-                        <img src="" />
+                        <img src={avatar} />
                     </div>
                 </div>
                 <div className="chat-header">
-                    {message.name}
+                    {name}
                 </div>
-                <div className="chat-bubble">{message.text}</div>
+                <div className="chat-bubble">{text}</div>
             </div>
         </div>
     );

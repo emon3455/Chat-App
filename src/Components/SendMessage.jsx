@@ -1,13 +1,38 @@
 import React, { useState } from 'react';
+import { UserAuth } from '../Context/AuthContext';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const SendMessage = () => {
 
     const [values , setValues] = useState(null);
+    const {currentUser} = UserAuth();
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault();
         const messages = e.target.name.value;
+
+        if(messages === ""){
+            alert("please enter valid message!!!");
+            return;
+        }
+
+        try{
+            const {uid , displayName , photoURL} = currentUser;
+            await addDoc(collection(db,"message"),{
+                text: messages,
+                name: displayName,
+                avatar: photoURL,
+                createdAt: serverTimestamp(),
+                uid
+            })
+        }
+        catch(er){
+            console.log(er);
+        }
+
         setValues(messages);
+        e.target.name.value=""
     }
     console.log(values);
 
